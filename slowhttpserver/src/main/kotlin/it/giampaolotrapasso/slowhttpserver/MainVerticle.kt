@@ -18,8 +18,8 @@ class MainVerticle : CoroutineVerticle() {
 
     val router = Router.router(vertx)
 
-    router.get("/").coroutineHandler{ctx -> sayHello(ctx)}
-    router.get("/hello").coroutineHandler{ctx -> sayHello(ctx)}
+    router.get("/").coroutineHandler{ctx -> slowResponse(ctx)}
+    router.get("/slow").coroutineHandler{ctx -> slowResponse(ctx)}
 
     // Start the server
     vertx
@@ -28,7 +28,7 @@ class MainVerticle : CoroutineVerticle() {
       .listenAwait(9999)
   }
 
-  private suspend fun sayHello(ctx: RoutingContext) {
+  private suspend fun slowResponse(ctx: RoutingContext) {
     val pause = Random.nextLong(3000, 8000)
     delay(pause)
     ctx
